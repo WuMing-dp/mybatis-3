@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Offline entity resolver for the MyBatis DTDs.
- *
+ *加载本地的 mybatis-3-config.dtd 和 mybatis-3-mapper.dtd 文件
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
@@ -75,6 +75,7 @@ public class XMLMapperEntityResolver implements EntityResolver {
     InputSource source = null;
     if (path != null) {
       try {
+        //创建一个输入流
         InputStream in = Resources.getResourceAsStream(path);
         source = new InputSource(in);
         source.setPublicId(publicId);

@@ -18,6 +18,7 @@ package org.apache.ibatis.parsing;
 import java.util.Properties;
 
 /**
+ * 动态属性解析器
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */
@@ -48,19 +49,27 @@ public class PropertyParser {
   private static final String ENABLE_DEFAULT_VALUE = "false";
   private static final String DEFAULT_VALUE_SEPARATOR = ":";
 
+  //使用私有构造器，防止实例化,因为它是一个静态方法的工具类
   private PropertyParser() {
     // Prevent Instantiation
   }
 
+  //基于Properties对象替换字符串中的占位符
   public static String parse(String string, Properties variables) {
+    // 创建VariableTokenHandler对象
     VariableTokenHandler handler = new VariableTokenHandler(variables);
+    // 创建GenericTokenParser对象
     GenericTokenParser parser = new GenericTokenParser("${", "}", handler);
+    // 解析字符串
     return parser.parse(string);
   }
 
   private static class VariableTokenHandler implements TokenHandler {
+    //变量集合
     private final Properties variables;
+    //是否开启默认值功能
     private final boolean enableDefaultValue;
+    //默认值分隔符,:号
     private final String defaultValueSeparator;
 
     private VariableTokenHandler(Properties variables) {
